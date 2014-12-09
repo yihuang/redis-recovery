@@ -1,11 +1,9 @@
+#!/usr/bin/env python
 'set timestamp every second'
-import gevent
-import gevent.monkey
-gevent.monkey.patch_all()
-
 import traceback
 import credis
 import time
+from threading import Thread
 
 JOBS = [
     ('127.0.0.1', 6379),
@@ -22,7 +20,7 @@ def worker():
 
 def main():
     while True:
-        gevent.spawn(worker)
+        Thread(target=worker).run()
         time.sleep(1)
 
 if __name__ == '__main__':
